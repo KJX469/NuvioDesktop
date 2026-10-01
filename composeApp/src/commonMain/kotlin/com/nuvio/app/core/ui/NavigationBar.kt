@@ -145,9 +145,11 @@ fun NuvioNavigationBar(
     compactSize: Boolean = false,
     content: @Composable NuvioNavigationBarScope.() -> Unit,
 ) {
-    val targetLabelFraction = when (navBarStyle) {
-        NavBarStyle.EXPANDED -> 1f
-        NavBarStyle.COMPACT -> 0f
+    val isSimpleMode = MaterialTheme.nuvio.isSimpleMode
+    val targetLabelFraction = when {
+        isSimpleMode -> 1f
+        navBarStyle == NavBarStyle.EXPANDED -> 1f
+        navBarStyle == NavBarStyle.COMPACT -> 0f
         else -> scrollState?.labelVisibility ?: 1f
     }
     val labelFraction by animateFloatAsState(
@@ -468,7 +470,7 @@ private class NuvioClassicNavigationBarScopeImpl(
             label = "classic_nav_icon_color",
         )
         with(rowScope) {
-            Icon(
+            Column(
                 modifier = modifier
                     .widthIn(max = tokens.components.navItemMaxWidth)
                     .fillMaxWidth()
@@ -480,13 +482,21 @@ private class NuvioClassicNavigationBarScopeImpl(
                         role = Role.Tab,
                         onClick = onClick,
                     )
-                    .padding(NuvioTokens.Space.s10)
-                    .size(tokens.components.navIconSize)
-                    .then(if (selected) Modifier.gradientMask(palette.accentBrush()) else Modifier),
-                imageVector = icon,
-                contentDescription = contentDescription,
-                tint = if (selected) Color.White else iconColor,
-            )
+                    .padding(NuvioTokens.Space.s10),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(tokens.components.navIconSize)
+                        .then(if (selected) Modifier.gradientMask(palette.accentBrush()) else Modifier),
+                    imageVector = icon,
+                    contentDescription = contentDescription,
+                    tint = if (selected) Color.White else iconColor,
+                )
+                if (tokens.isSimpleMode) {
+                    NavItemLabel(label = label, labelFraction = 1f, iconColor = iconColor, selected = selected, compactSize = false)
+                }
+            }
         }
     }
 
@@ -506,7 +516,7 @@ private class NuvioClassicNavigationBarScopeImpl(
             label = "classic_nav_icon_color",
         )
         with(rowScope) {
-            Icon(
+            Column(
                 modifier = modifier
                     .widthIn(max = tokens.components.navItemMaxWidth)
                     .fillMaxWidth()
@@ -518,13 +528,21 @@ private class NuvioClassicNavigationBarScopeImpl(
                         role = Role.Tab,
                         onClick = onClick,
                     )
-                    .padding(NuvioTokens.Space.s10)
-                    .size(tokens.components.navIconSize)
-                    .then(if (selected) Modifier.gradientMask(palette.accentBrush()) else Modifier),
-                painter = painterResource(icon),
-                contentDescription = contentDescription,
-                tint = if (selected) Color.White else iconColor,
-            )
+                    .padding(NuvioTokens.Space.s10),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(tokens.components.navIconSize)
+                        .then(if (selected) Modifier.gradientMask(palette.accentBrush()) else Modifier),
+                    painter = painterResource(icon),
+                    contentDescription = contentDescription,
+                    tint = if (selected) Color.White else iconColor,
+                )
+                if (tokens.isSimpleMode) {
+                    NavItemLabel(label = label, labelFraction = 1f, iconColor = iconColor, selected = selected, compactSize = false)
+                }
+            }
         }
     }
 

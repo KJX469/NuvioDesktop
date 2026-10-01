@@ -340,6 +340,7 @@ data class NuvioComponentTokens(
     val posterRadius: Dp,
     val avatarSize: Dp,
     val playerPanelMaxWidth: Dp,
+    val minTouchTarget: Dp,
 )
 
 @Immutable
@@ -354,10 +355,11 @@ data class NuvioThemeTokens(
     val icons: NuvioIconTokens,
     val breakpoints: NuvioBreakpointTokens,
     val components: NuvioComponentTokens,
+    val isSimpleMode: Boolean = false,
 )
 
 internal val LocalNuvioThemeTokens = staticCompositionLocalOf {
-    defaultNuvioThemeTokens(ThemeColors.White, amoled = false, colorScheme = null)
+    defaultNuvioThemeTokens(ThemeColors.White, amoled = false, colorScheme = null, simpleMode = false)
 }
 
 val MaterialTheme.nuvio: NuvioThemeTokens
@@ -369,6 +371,7 @@ internal fun defaultNuvioThemeTokens(
     palette: ThemeColorPalette,
     amoled: Boolean,
     colorScheme: ColorScheme?,
+    simpleMode: Boolean,
 ): NuvioThemeTokens {
     val background = if (amoled) Color.Black else palette.background
     val textPrimary = Color(0xFFF5F7F8)
@@ -521,6 +524,9 @@ internal fun defaultNuvioThemeTokens(
             posterRadius = NuvioTokens.Radius.poster,
             avatarSize = NuvioTokens.Space.s48,
             playerPanelMaxWidth = 600.dp,
+            minTouchTarget = if (simpleMode) 64.dp else 48.dp,
         ),
+        isSimpleMode = simpleMode,
     )
 }
+

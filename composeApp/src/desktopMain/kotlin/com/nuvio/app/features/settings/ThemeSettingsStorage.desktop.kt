@@ -102,6 +102,13 @@ internal actual object ThemeSettingsStorage {
         store.putBoolean(ProfileScopedKey.of(navBarGlowEnabledKey), enabled)
     }
 
+    actual fun loadSimpleModeEnabled(): Boolean? =
+        store.getBoolean(ProfileScopedKey.of("simple_mode_enabled"))
+
+    actual fun saveSimpleModeEnabled(enabled: Boolean) {
+        store.putBoolean(ProfileScopedKey.of("simple_mode_enabled"), enabled)
+    }
+
     actual fun exportToSyncPayload(): JsonObject = buildJsonObject {
         loadSelectedTheme()?.let { put(selectedThemeKey, encodeSyncString(it)) }
         loadCustomThemeColors()?.let { put(customThemeColorsKey, encodeSyncString(it)) }

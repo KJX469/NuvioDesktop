@@ -506,7 +506,7 @@ private fun DefaultHomeHeroFrame(
                     shape = RoundedCornerShape(40.dp),
                 ) {
                     Text(
-                        text = stringResource(Res.string.home_view_details),
+                        text = if (MaterialTheme.nuvio.isSimpleMode) "Play" else stringResource(Res.string.home_view_details),
                         modifier = Modifier.padding(horizontal = 28.dp, vertical = 12.dp),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
@@ -990,7 +990,7 @@ private fun DesktopHeroContentBlock(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = stringResource(Res.string.home_view_details),
+                            text = if (MaterialTheme.nuvio.isSimpleMode) "Play" else stringResource(Res.string.home_view_details),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,

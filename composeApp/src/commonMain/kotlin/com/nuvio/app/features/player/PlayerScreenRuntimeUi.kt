@@ -61,6 +61,19 @@ internal fun PlayerScreenRuntime.RenderPlayerRuntimeUi() {
     val episodeNumber = activeEpisodeNumber
     val episodeTitle = activeEpisodeTitle
     val isEpisode = seasonNumber != null && episodeNumber != null
+    val isSimpleMode = MaterialTheme.nuvio.isSimpleMode
+
+    LaunchedEffect(isSimpleMode, activeSkipInterval, skipIntervalDismissed) {
+        if (isSimpleMode && activeSkipInterval != null && !skipIntervalDismissed) {
+            runtime.handlePlayerControlsEvent("skipInterval", 0.0)
+        }
+    }
+
+    LaunchedEffect(isSimpleMode, nextEpisodeAutoPlayCountdown) {
+        if (isSimpleMode && nextEpisodeAutoPlayCountdown != null) {
+            runtime.handlePlayerControlsEvent("playNextEpisode", 0.0)
+        }
+    }
 
     LaunchedEffect(runtime.title, runtime.poster, seasonNumber, episodeNumber, episodeTitle, playbackSnapshot.isPlaying) {
         val episodeLabel = if (isEpisode) {

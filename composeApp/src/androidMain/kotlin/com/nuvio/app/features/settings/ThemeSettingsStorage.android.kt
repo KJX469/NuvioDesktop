@@ -144,6 +144,19 @@ actual object ThemeSettingsStorage {
             ?.apply()
     }
 
+    actual fun loadSimpleModeEnabled(): Boolean? =
+        preferences?.let { prefs ->
+            val key = ProfileScopedKey.of("simple_mode_enabled")
+            if (prefs.contains(key)) prefs.getBoolean(key, false) else null
+        }
+
+    actual fun saveSimpleModeEnabled(enabled: Boolean) {
+        preferences
+            ?.edit()
+            ?.putBoolean(ProfileScopedKey.of("simple_mode_enabled"), enabled)
+            ?.apply()
+    }
+
     actual fun exportToSyncPayload(): JsonObject = buildJsonObject {
         loadSelectedTheme()?.let { put(selectedThemeKey, encodeSyncString(it)) }
         loadCustomThemeColors()?.let { put(customThemeColorsKey, encodeSyncString(it)) }

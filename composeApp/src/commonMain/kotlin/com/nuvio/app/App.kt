@@ -100,6 +100,9 @@ internal fun AppEnvironment(content: @Composable () -> Unit) {
     val amoledEnabled by remember {
         ThemeSettingsRepository.amoledEnabled
     }.collectAsStateWithLifecycle()
+    val simpleModeEnabled by remember {
+        ThemeSettingsRepository.simpleModeEnabled
+    }.collectAsStateWithLifecycle()
 
     val customThemeColors by ThemeSettingsRepository.customThemeColors.collectAsStateWithLifecycle()
 
@@ -109,6 +112,7 @@ internal fun AppEnvironment(content: @Composable () -> Unit) {
             amoled = amoledEnabled,
             customThemeColors = customThemeColors,
             desktopUiScale = desktopUiScaleForWindow(maxWidth.value, maxHeight.value),
+            simpleMode = simpleModeEnabled,
         ) {
             content()
         }

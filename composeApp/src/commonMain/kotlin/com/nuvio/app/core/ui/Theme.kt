@@ -220,13 +220,14 @@ fun NuvioTheme(
     amoled: Boolean = false,
     desktopUiScale: Float = NuvioDesktopMinUiScale,
     customThemeColors: CustomThemeColors = CustomThemeColors.Default,
+    simpleMode: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val palette = remember(appTheme, customThemeColors) {
         ThemeColors.getColorPalette(appTheme, customThemeColors)
     }
     val colorScheme = buildColorScheme(palette, amoled = amoled)
-    val tokens = defaultNuvioThemeTokens(palette, amoled = amoled, colorScheme = colorScheme)
+    val tokens = defaultNuvioThemeTokens(palette, amoled = amoled, colorScheme = colorScheme, simpleMode = simpleMode)
 
     val density = LocalDensity.current
     val effectiveDesktopUiScale = if (isDesktop) {

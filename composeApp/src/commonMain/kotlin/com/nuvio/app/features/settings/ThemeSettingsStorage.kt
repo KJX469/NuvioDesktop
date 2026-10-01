@@ -20,6 +20,8 @@ internal expect object ThemeSettingsStorage {
     fun saveNavBarStyle(styleKey: String)
     fun loadNavBarGlowEnabled(): Boolean?
     fun saveNavBarGlowEnabled(enabled: Boolean)
+    fun loadSimpleModeEnabled(): Boolean?
+    fun saveSimpleModeEnabled(enabled: Boolean)
     fun exportToSyncPayload(): JsonObject
     fun replaceFromSyncPayload(payload: JsonObject)
 }

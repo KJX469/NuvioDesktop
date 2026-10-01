@@ -617,8 +617,10 @@ private data class ContinueWatchingLandscapeCardMetrics(
 private fun continueWatchingLandscapeCardMetrics(
     basePosterWidthDp: Int,
     cornerRadiusDp: Int,
+    isSimpleMode: Boolean = false,
 ): ContinueWatchingLandscapeCardMetrics {
     val width = continueWatchingLandscapeCardWidth(basePosterWidthDp)
+    val progressHeightOverride = if (isSimpleMode) 6.dp else 3.dp
     return when {
         basePosterWidthDp <= 108 -> ContinueWatchingLandscapeCardMetrics(
             width = width,
@@ -630,7 +632,7 @@ private fun continueWatchingLandscapeCardMetrics(
             badgeVerticalPadding = 2.dp,
             progressHorizontalPadding = 8.dp,
             progressBottomPadding = 3.dp,
-            progressHeight = 3.dp,
+            progressHeight = progressHeightOverride,
             titleTextSize = 12.sp,
             metaTextSize = 9.sp,
             badgeTextSize = 8.sp,
@@ -645,7 +647,7 @@ private fun continueWatchingLandscapeCardMetrics(
             badgeVerticalPadding = 3.dp,
             progressHorizontalPadding = 8.dp,
             progressBottomPadding = 3.dp,
-            progressHeight = 3.dp,
+            progressHeight = progressHeightOverride,
             titleTextSize = 13.sp,
             metaTextSize = 10.sp,
             badgeTextSize = 9.sp,
@@ -660,7 +662,7 @@ private fun continueWatchingLandscapeCardMetrics(
             badgeVerticalPadding = 3.dp,
             progressHorizontalPadding = 9.dp,
             progressBottomPadding = 4.dp,
-            progressHeight = 3.dp,
+            progressHeight = progressHeightOverride,
             titleTextSize = 14.sp,
             metaTextSize = 10.sp,
             badgeTextSize = 10.sp,
@@ -677,11 +679,13 @@ private fun ContinueWatchingCard(
     onLongClick: (() -> Unit)?,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
-    val cardMetrics = remember(posterCardStyle.widthDp, posterCardStyle.cornerRadiusDp) {
+    val isSimpleMode = MaterialTheme.nuvio.isSimpleMode
+    val cardMetrics = remember(posterCardStyle.widthDp, posterCardStyle.cornerRadiusDp, isSimpleMode) {
         val basePosterWidthDp = desktopCatalogShelfPosterBaseWidthDp(posterCardStyle.widthDp)
         continueWatchingLandscapeCardMetrics(
             basePosterWidthDp = basePosterWidthDp,
             cornerRadiusDp = posterCardStyle.cornerRadiusDp,
+            isSimpleMode = isSimpleMode,
         )
     }
     val todayIsoDate = CurrentDateProvider.todayIsoDate()

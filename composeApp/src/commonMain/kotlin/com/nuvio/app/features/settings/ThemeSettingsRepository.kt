@@ -37,6 +37,9 @@ object ThemeSettingsRepository {
     private val _desktopNavigationLayout = MutableStateFlow(DesktopNavigationLayout.Default)
     val desktopNavigationLayout: StateFlow<DesktopNavigationLayout> = _desktopNavigationLayout.asStateFlow()
 
+    private val _simpleModeEnabled = MutableStateFlow(false)
+    val simpleModeEnabled: StateFlow<Boolean> = _simpleModeEnabled.asStateFlow()
+
     private val _selectedAppLanguage = MutableStateFlow(AppLanguage.DEVICE)
     val selectedAppLanguage: StateFlow<AppLanguage> = _selectedAppLanguage.asStateFlow()
 
@@ -102,6 +105,7 @@ object ThemeSettingsRepository {
         _selectedAppLanguage.value = appLanguage
         _navBarGlowEnabled.value = ThemeSettingsStorage.loadNavBarGlowEnabled() ?: true
         _navBarStyle.value = NavBarStyle.fromKey(ThemeSettingsStorage.loadNavBarStyle())
+        _simpleModeEnabled.value = ThemeSettingsStorage.loadSimpleModeEnabled() ?: false
     }
 
     fun setTheme(theme: AppTheme) {
@@ -145,6 +149,13 @@ object ThemeSettingsRepository {
         if (_desktopNavigationLayout.value == layout) return
         _desktopNavigationLayout.value = layout
         ThemeSettingsStorage.saveDesktopNavigationLayout(layout.name)
+    }
+
+    fun setSimpleMode(enabled: Boolean) {
+        ensureLoaded()
+        if (_simpleModeEnabled.value == enabled) return
+        _simpleModeEnabled.value = enabled
+        ThemeSettingsStorage.saveSimpleModeEnabled(enabled)
     }
 
     fun setAppLanguage(language: AppLanguage) {

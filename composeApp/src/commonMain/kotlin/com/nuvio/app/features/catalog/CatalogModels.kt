@@ -1,7 +1,9 @@
 package com.nuvio.app.features.catalog
 
+import androidx.compose.runtime.Immutable
 import com.nuvio.app.features.home.MetaPreview
 
+@Immutable
 data class CatalogUiState(
     val items: List<MetaPreview> = emptyList(),
     val isLoading: Boolean = false,
@@ -13,6 +15,7 @@ data class CatalogUiState(
         get() = nextSkip != null
 }
 
+@Immutable
 data class CatalogScrollPosition(
     val firstVisibleItemIndex: Int = 0,
     val firstVisibleItemScrollOffset: Int = 0,

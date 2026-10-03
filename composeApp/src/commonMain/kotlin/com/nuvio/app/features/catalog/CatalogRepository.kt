@@ -23,7 +23,7 @@ import nuvio.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.getString
 
 object CatalogRepository {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + kotlinx.coroutines.Dispatchers.IO)
     private val _uiState = MutableStateFlow(CatalogUiState())
     val uiState: StateFlow<CatalogUiState> = _uiState.asStateFlow()
 
@@ -109,7 +109,7 @@ object CatalogRepository {
             } catch (error: Exception) {
                 if (activeRequest != request) return@launch
                 _uiState.value = CatalogUiState(
-                    errorMessage = error.message ?: getString(Res.string.catalog_load_failed),
+                    errorMessage = getString(Res.string.catalog_load_failed) + " We couldn't connect to this catalog. Please try again.",
                 )
             }
         }
@@ -185,7 +185,7 @@ object CatalogRepository {
                         items = if (reset) emptyList() else current.items,
                         isLoading = false,
                         nextSkip = null,
-                        errorMessage = error.message ?: getString(Res.string.catalog_load_failed),
+                        errorMessage = getString(Res.string.catalog_load_failed) + " We couldn't connect to this catalog. Please try again.",
                     )
                 },
             )

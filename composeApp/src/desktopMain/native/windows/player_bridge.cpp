@@ -3,6 +3,12 @@
 #endif
 #include <windows.h>
 #include <dwmapi.h>
+#ifndef DWMWA_BORDER_COLOR
+#define DWMWA_BORDER_COLOR 34
+#endif
+#ifndef DWMWA_CAPTION_COLOR
+#define DWMWA_CAPTION_COLOR 35
+#endif
 #include <shlobj.h>
 #include <wrl.h>
 #include <WebView2.h>

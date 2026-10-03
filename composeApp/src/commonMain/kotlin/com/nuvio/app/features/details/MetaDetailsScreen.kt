@@ -2489,9 +2489,16 @@ private fun ConfiguredMetaSections(
 ) {
     val enabledItems = settings.items.filter { it.enabled }
 
+    val isSimpleMode = com.nuvio.app.core.ui.LocalNuvioThemeTokens.current.isSimpleMode
     // Helper to check if a section actually has content to show
     val sectionHasContent: (MetaScreenSectionKey) -> Boolean = { key ->
-        when (key) {
+        val allowedInSimpleMode = !isSimpleMode || key in setOf(
+            MetaScreenSectionKey.ACTIONS,
+            MetaScreenSectionKey.OVERVIEW,
+            MetaScreenSectionKey.EPISODES,
+            MetaScreenSectionKey.MORE_LIKE_THIS
+        )
+        allowedInSimpleMode && when (key) {
             MetaScreenSectionKey.ACTIONS -> true
             MetaScreenSectionKey.OVERVIEW -> true
             MetaScreenSectionKey.PRODUCTION -> hasProductionSection

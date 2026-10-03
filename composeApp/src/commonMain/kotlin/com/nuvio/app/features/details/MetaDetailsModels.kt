@@ -3,6 +3,8 @@ package com.nuvio.app.features.details
 import com.nuvio.app.features.home.MetaPreview
 import com.nuvio.app.features.streams.StreamItem
 
+
+@androidx.compose.runtime.Immutable
 data class MetaDetails(
     val id: String,
     val type: String,
@@ -48,12 +50,16 @@ enum class MoreLikeThisSource {
     SIMKL,
 }
 
+
+@androidx.compose.runtime.Immutable
 data class MetaExternalRating(
     val source: String,
     val value: Double,
     val isCertified: Boolean = false,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaTrailer(
     val id: String,
     val key: String,
@@ -68,6 +74,8 @@ data class MetaTrailer(
     val iso6391: String? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaPerson(
     val name: String,
     val role: String? = null,
@@ -75,18 +83,24 @@ data class MetaPerson(
     val tmdbId: Int? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaCompany(
     val name: String,
     val logo: String? = null,
     val tmdbId: Int? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaLink(
     val name: String,
     val category: String,
     val url: String,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaVideo(
     val id: String,
     val title: String,
@@ -102,6 +116,8 @@ data class MetaVideo(
     val streams: List<StreamItem> = emptyList(),
 )
 
+
+@androidx.compose.runtime.Immutable
 data class MetaDetailsUiState(
     val isLoading: Boolean = false,
     val meta: MetaDetails? = null,

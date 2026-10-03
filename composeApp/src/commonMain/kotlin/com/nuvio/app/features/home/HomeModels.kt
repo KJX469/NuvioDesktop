@@ -1,8 +1,10 @@
 package com.nuvio.app.features.home
 
+import androidx.compose.runtime.Immutable
 import com.nuvio.app.features.addons.ManagedAddon
 import com.nuvio.app.features.catalog.CatalogTarget
 
+@Immutable
 data class MetaPreview(
     val id: String,
     val type: String,
@@ -31,6 +33,7 @@ enum class PosterShape {
     Landscape,
 }
 
+@Immutable
 data class HomeCatalogSection(
     val key: String,
     val title: String,
@@ -45,6 +48,7 @@ data class HomeCatalogSection(
 fun HomeCatalogSection.canOpenCatalog(previewLimit: Int): Boolean =
     availableItemCount > previewLimit || hasMore
 
+@Immutable
 data class HomeUiState(
     val isLoading: Boolean = false,
     val heroItems: List<MetaPreview> = emptyList(),

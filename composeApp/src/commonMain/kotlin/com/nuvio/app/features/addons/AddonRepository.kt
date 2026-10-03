@@ -49,7 +49,7 @@ private data class AddonPushItem(
 private const val ADDON_PUSH_DEBOUNCE_MS = 500L
 
 object AddonRepository {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + kotlinx.coroutines.Dispatchers.IO)
     private val log = Logger.withTag("AddonRepository")
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
     private val _uiState = MutableStateFlow(AddonsUiState())
@@ -184,7 +184,7 @@ object AddonRepository {
         }
 
         val manifest = try {
-            withContext(Dispatchers.Default) {
+            withContext(kotlinx.coroutines.Dispatchers.IO) {
                 val payload = fetchAddonResponseText(manifestUrl)
                 AddonManifestParser.parse(
                     manifestUrl = manifestUrl,
@@ -192,7 +192,7 @@ object AddonRepository {
                 )
             }
         } catch (error: Throwable) {
-            return AddAddonResult.Error(error.message ?: getString(Res.string.addon_load_manifest_failed))
+            return AddAddonResult.Error("We couldn't install this addon. The URL might be invalid or unreachable. Please try again.")
         }
 
         _uiState.update { current ->
@@ -321,7 +321,7 @@ object AddonRepository {
                                     onFailure = { error ->
                                         addon.copy(
                                             isRefreshing = false,
-                                            errorMessage = error.message ?: getString(Res.string.addon_load_manifest_failed),
+                                            errorMessage = "We couldn't connect to this addon. Please check your internet connection and try again.",
                                         )
                                     },
                                 )

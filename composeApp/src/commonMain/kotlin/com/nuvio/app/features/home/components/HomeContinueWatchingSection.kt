@@ -679,7 +679,7 @@ private fun ContinueWatchingCard(
     onLongClick: (() -> Unit)?,
 ) {
     val posterCardStyle = rememberPosterCardStyleUiState()
-    val isSimpleMode = MaterialTheme.nuvio.isSimpleMode
+    val isSimpleMode = com.nuvio.app.core.ui.LocalNuvioThemeTokens.current.isSimpleMode
     val cardMetrics = remember(posterCardStyle.widthDp, posterCardStyle.cornerRadiusDp, isSimpleMode) {
         val basePosterWidthDp = desktopCatalogShelfPosterBaseWidthDp(posterCardStyle.widthDp)
         continueWatchingLandscapeCardMetrics(

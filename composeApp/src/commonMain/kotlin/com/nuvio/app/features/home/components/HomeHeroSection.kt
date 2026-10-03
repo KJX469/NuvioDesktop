@@ -153,8 +153,9 @@ fun HomeHeroSection(
         }
     }
 
-    ScreenActivityEffect(autoScrollPage, items.size) { active ->
-        if (!active || items.size <= 1) return@ScreenActivityEffect
+    val isSimpleMode = com.nuvio.app.core.ui.LocalNuvioThemeTokens.current.isSimpleMode
+    ScreenActivityEffect(autoScrollPage, items.size, isSimpleMode) { active ->
+        if (!active || items.size <= 1 || isSimpleMode) return@ScreenActivityEffect
         delay(HERO_AUTO_SCROLL_INTERVAL_MS)
         while (pagerState.isScrollInProgress) {
             delay(100L)

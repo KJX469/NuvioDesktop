@@ -4,6 +4,8 @@ import com.nuvio.app.core.build.AppFeaturePolicy
 import kotlinx.serialization.Serializable
 
 @Serializable
+
+@androidx.compose.runtime.Immutable
 data class StreamSubtitle(
     val url: String,
     val language: String,
@@ -11,6 +13,8 @@ data class StreamSubtitle(
     val headers: Map<String, String>? = null
 )
 
+
+@androidx.compose.runtime.Immutable
 data class StreamItem(
     val name: String? = null,
     val title: String? = null,
@@ -113,6 +117,8 @@ data class StreamItem(
         get() = url != null || infoHash != null || externalUrl != null || clientResolve != null
 }
 
+
+@androidx.compose.runtime.Immutable
 data class StreamBadge(
     val name: String,
     val imageURL: String = "",
@@ -177,6 +183,8 @@ fun StreamItem.isSelectableForPlayback(debridEnabled: Boolean): Boolean =
         (AppFeaturePolicy.p2pEnabled && needsLocalDebridResolve && p2pInfoHash != null) ||
         (debridEnabled && isAddonDebridCandidate)
 
+
+@androidx.compose.runtime.Immutable
 data class StreamBehaviorHints(
     val bingeGroup: String? = null,
     val notWebReady: Boolean = false,
@@ -186,6 +194,8 @@ data class StreamBehaviorHints(
     val proxyHeaders: StreamProxyHeaders? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class StreamProxyHeaders(
     val request: Map<String, String>? = null,
     val response: Map<String, String>? = null,
@@ -198,6 +208,8 @@ enum class StreamDebridCacheState {
     UNKNOWN,
 }
 
+
+@androidx.compose.runtime.Immutable
 data class StreamDebridCacheStatus(
     val providerId: String,
     val providerName: String,
@@ -206,6 +218,8 @@ data class StreamDebridCacheStatus(
     val cachedSize: Long? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class StreamClientResolve(
     val type: String? = null,
     val infoHash: String? = null,
@@ -232,10 +246,14 @@ data class StreamClientResolve(
             isCached == true
 }
 
+
+@androidx.compose.runtime.Immutable
 data class StreamClientResolveStream(
     val raw: StreamClientResolveRaw? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class StreamClientResolveRaw(
     val torrentName: String? = null,
     val filename: String? = null,
@@ -247,6 +265,8 @@ data class StreamClientResolveRaw(
     val parsed: StreamClientResolveParsed? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class StreamClientResolveParsed(
     val rawTitle: String? = null,
     val parsedTitle: String? = null,
@@ -271,6 +291,8 @@ data class StreamClientResolveParsed(
     val unrated: Boolean? = null,
 )
 
+
+@androidx.compose.runtime.Immutable
 data class AddonStreamGroup(
     val addonName: String,
     val addonId: String,
@@ -286,6 +308,8 @@ enum class StreamsEmptyStateReason {
     StreamFetchFailed,
 }
 
+
+@androidx.compose.runtime.Immutable
 data class StreamsUiState(
     val requestToken: String? = null,
     val autoPlayDecided: Boolean = false,

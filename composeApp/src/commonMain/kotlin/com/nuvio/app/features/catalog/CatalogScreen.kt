@@ -141,7 +141,8 @@ fun CatalogScreen(
         snapshotFlow { gridState.layoutInfo }
             .map { layoutInfo ->
                 val lastVisible = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
-                lastVisible >= layoutInfo.totalItemsCount - 6
+                val threshold = if (MaterialTheme.nuvio.isSimpleMode) 24 else 6
+                lastVisible >= layoutInfo.totalItemsCount - threshold
             }
             .distinctUntilChanged()
             .filter { it && uiState.canLoadMore && !uiState.isLoading }

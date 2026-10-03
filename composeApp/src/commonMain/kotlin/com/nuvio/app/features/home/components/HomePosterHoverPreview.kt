@@ -190,16 +190,24 @@ internal fun HomePosterHoverPreview(
         }
     }
 
-    LaunchedEffect(anchorHovered, trailerPlaybackEnabled) {
+    val isSimpleMode = MaterialTheme.nuvio.isSimpleMode
+    LaunchedEffect(anchorHovered, trailerPlaybackEnabled, isSimpleMode) {
         if (
-            anchorHovered &&
+            (anchorHovered || isSimpleMode) &&
             trailerPlaybackEnabled &&
             trailerPlaybackSource == null &&
             !trailerResolutionPending
         ) {
-            delay(HoverTrailerExtractionDebounceMillis)
-            trailerResolutionPending = true
-            trailerRequestId += 1
+            if (!anchorHovered && isSimpleMode) {
+                // Stagger background pre-fetching slightly to avoid overwhelming network on mount
+                delay(HoverTrailerExtractionDebounceMillis + kotlin.random.Random.nextLong(500L, 2000L))
+            } else {
+                delay(HoverTrailerExtractionDebounceMillis)
+            }
+            if (trailerPlaybackSource == null && !trailerResolutionPending) {
+                trailerResolutionPending = true
+                trailerRequestId += 1
+            }
         }
     }
 

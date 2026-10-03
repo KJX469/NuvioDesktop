@@ -137,11 +137,12 @@ fun CatalogScreen(
             }
     }
 
-    LaunchedEffect(gridState, uiState.canLoadMore, uiState.isLoading) {
+    val isSimpleMode = com.nuvio.app.core.ui.LocalNuvioThemeTokens.current.isSimpleMode
+    LaunchedEffect(gridState, uiState.canLoadMore, uiState.isLoading, isSimpleMode) {
         snapshotFlow { gridState.layoutInfo }
             .map { layoutInfo ->
                 val lastVisible = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
-                val threshold = if (MaterialTheme.nuvio.isSimpleMode) 24 else 6
+                val threshold = if (isSimpleMode) 24 else 6
                 lastVisible >= layoutInfo.totalItemsCount - threshold
             }
             .distinctUntilChanged()
